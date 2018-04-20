@@ -24,7 +24,13 @@ public class PastisView extends Application{
 	private HBox textALenght = new HBox();
 	private HBox optionBox = new HBox();
 	private Spinner<Integer> lenghtSpinner = new Spinner<Integer>();
+	private TextField pass = new TextField();
 
+
+	@Override
+	public void init(){
+		model.pasProperty.bind(pass.textProperty());
+	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		controller = new PastisController();
@@ -35,7 +41,6 @@ public class PastisView extends Application{
 		lenghtSpinner.setValueFactory(lenghtFactory);
 		lenghtSpinner.setPrefWidth(80);
 		
-		TextField pass = new TextField();
 		Label complexity = new Label("Please select the options");
 		
 		textALenght.getChildren().addAll(pass,lenghtSpinner);

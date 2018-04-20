@@ -1,7 +1,12 @@
 package s03;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class PastisModel implements IPastisModel{
 
+	StringProperty pasProperty = new SimpleStringProperty();
+	
 	@Override
 	public int getLength() {
 		// TODO Auto-generated method stub
