@@ -76,7 +76,7 @@ public class PastisView extends Application{
 		root.setAlignment(Pos.CENTER);
 		root.getChildren().addAll(textALenght,complexity,optionBox,clip);
 		root.setPadding(new Insets(90,80,90,80));
-//sd
+//sdsad
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 
