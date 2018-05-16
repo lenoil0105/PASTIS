@@ -29,18 +29,23 @@ public class PastisView extends Application{
 
 	@Override
 	public void init(){
+		controller = new PastisController();
+		model = controller.init();
 		model.pasProperty.bind(pass.textProperty());
+		
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		controller = new PastisController();
-		model = controller.init();
+
 		
 		SpinnerValueFactory<Integer> lenghtFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,25,12,1);
 		lenghtFactory.setWrapAround(true);
 		lenghtSpinner.setValueFactory(lenghtFactory);
 		lenghtSpinner.setPrefWidth(80);
+		model.lenght.bind(lenghtSpinner.valueProperty());
 		
+		Button generate = new Button("Generate Password");
+		generate.setOnMouseClicked(e-> pass.setText(controller.generate()));
 		Label complexity = new Label("Please select the options");
 		
 		textALenght.getChildren().addAll(pass,lenghtSpinner);
@@ -49,25 +54,30 @@ public class PastisView extends Application{
 		VBox check1 = new VBox();
 		CheckBox maj = new CheckBox("majuscules");
 		maj.setTooltip(new Tooltip("si cette case est cochée le modepasse peut contenir des Majuscule"));
+		model.Uc.bind(maj.selectedProperty());
 		
 		CheckBox min = new CheckBox("minuscules");
 		min.setTooltip(new Tooltip("si cette case est cochée le modepasse peut contenir des minuscule"));
+		model.Lc.bind(min.selectedProperty());
 		
 		CheckBox num = new CheckBox("chiffres");
 		num.setTooltip(new Tooltip("si cette case est cochée le modepasse peut contenir des numéro"));
+		model.digits.bind(num.selectedProperty());
 		
 		check1.getChildren().addAll(maj,min,num);
 		check1.setSpacing(5);
 		
 		VBox check2 = new VBox();
 		CheckBox spe = new CheckBox("caractères spéciaux");
-		num.setTooltip(new Tooltip("si cette case est cochée le modepasse peut contenir des caractères spéciaux"));
+		spe.setTooltip(new Tooltip("si cette case est cochée le modepasse peut contenir des caractères spéciaux"));
+		model.sym.bind(spe.selectedProperty());
 
 		CheckBox pro = new CheckBox("prononçable");
-		num.setTooltip(new Tooltip("si cette case est cochée le modepasse doit être prononçable"));
+		pro.setTooltip(new Tooltip("si cette case est cochée le modepasse doit être prononçable"));
 
 		CheckBox amb = new CheckBox("ambigus");
-		num.setTooltip(new Tooltip("si cette case est cochée le modepasse doit exlure les carctère ambigus"));
+		amb.setTooltip(new Tooltip("si cette case est cochée le modepasse doit exlure les carctère ambigus"));
+		model.unam.bind(amb.selectedProperty());
 
 		check2.getChildren().addAll(spe,pro,amb);	
 		check2.setSpacing(5);
@@ -79,10 +89,11 @@ public class PastisView extends Application{
 		Button clip = new Button("Copy to Clipboard");
 		
 		root.setAlignment(Pos.CENTER);
-		root.getChildren().addAll(textALenght,complexity,optionBox,clip);
+		root.getChildren().addAll(textALenght,generate,complexity,optionBox,clip);
 		root.setPadding(new Insets(90,80,90,80));
 //sdsad
 		primaryStage.setScene(new Scene(root));
+		primaryStage.setResizable(false);
 		primaryStage.show();
 
 	}
